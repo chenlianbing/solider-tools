@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>IMAGE: {{image_name}} </h1>
+
+{% load staticfiles %}
+{% with 'wages/'|add:image_name as image_static %}
+<img src="{% static image_static %}" width="231" height="60" />
+{% endwith %}
+
+</body>
+<html>
