@@ -1,182 +1,217 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<!--
+Purpose: Load external css, javascript files
+Added:   2014年9月9日14:34:04
+-->
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'wages/panel.css' %}" />
+<script src="{% static 'wages/wages_javascripts.js' %}"></script>
+
+<!--
+Purpose: Global Variables for Wage Calculation
+Added:   2014年9月9日14:34:04
+-->
+<script>
+{% if latest_wage_info %}	
+
+	var wageCalcDate = "{{ latest_wage_info.month }}";
+	var wageCalcBsicWage = "{{ latest_wage_info.basic_wage }}";
+	var wageCalcPerformance = "{{ latest_wage_info.performance }}";
+	var wageCalcAttenceBonus = "{{ latest_wage_info.attence_bonus }}";
+	var wageCalcHousingAllowances = "{{ latest_wage_info.housing_allowances }}";
+
+	var wageCalcPercentageDeduct0W = "{{ latest_wage_info.per0w }}";
+	var wageCalcPercentageDeduct6W = "{{ latest_wage_info.per6w  }}";
+	var wageCalcPercentageDeduct11W = "{{ latest_wage_info.per11w }}";
+	var wageCalcPercentageDeduct16W = "{{ latest_wage_info.per16w }}";
+	var wageCalcPercentageDeduct20W = "{{ latest_wage_info.per20w }}";
+	var wageCalcPercentageDeduct24W = "{{ latest_wage_info.per24w }}";
+	var wageCalcPercentageDeduct28W = "{{ latest_wage_info.per28w }}";
+	var wageCalcPercentageDeduct31W = "{{ latest_wage_info.per31w }}";
+	var wageCalcPercentageDeduct34W = "{{ latest_wage_info.per34w }}";				
+{% endif %}	
+</script>
 </head>
+
 <body>
 <div id="container">
-
-<div id="header">
-<h1 id="logo"></h1>
-<ul id="nav-global">
-<li id="nav-homepage"><a href="">首页</a></li>
-<li id="nav-wage"><a href="">工资计算</a></li>
-<li id="nav-aotoorder"><a href="">自动理单</a></li>
-<li id="nav-calculator"><a href="">价格计算</a></li>
-<li id="nav-board"><a href="">公告板</a></li>
-</ul>
-</div>
-<!-- END #header -->
-
-<div id="billboard">
-<h2><a href="">Wage Calculator</a></h2>
-
-</div>
-<!-- END #billboard -->
-
-<div id="columnwrap">  
-
-<div id="content-main">
-<div id="calculator_panel" class="section">
-
-<h1>工资计算</h1>
-<form name="input" >
-	<div id="wage_input">
-		<p><input type="text" name="sales"></input></p>
-		<p><input type="button" name="commit" value="提交"></input></p>
-	</div>
-</form>
-
-{% if latest_wage_info %}
-<div id="calc_display">
-<form name="calculate_display">
-<fieldset>
-<legend>计算明细</legend>
-计算时间：{{ latest_wage_info.month }}<br>
-基本工资：{{ latest_wage_info.basic_wage }}<br>
-客服绩效：{{ latest_wage_info.performance }}<br>
-全勤奖金：{{ latest_wage_info.attence_bonus }}<br>
-住房补贴：{{ latest_wage_info.housing_allowances }}<br>
-提成明细：
-<table>
-<tr> 
-<th>提成区间</th>
-<th>提成金额</th>
-</tr>
-
-<tr> 
-<td>0万——6万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>6万——11万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>11万——16万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>16万——20万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>20万——24万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>24万——28万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>28万——31万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>31万——34万</td>
-<td>0元</td>
-</tr>
-
-<tr> 
-<td>34万以上·</td>
-<td>0元</td>
-</tr>
-</table>
-<div id="wage_format">总额：</div>
-</fieldset>
-</form>
-{% endif %}	
-</div>
-
-{% if latest_wage_info %}
-	<table>
-	<tr>
-		<th>Date</th>
-		<th>Basic Wage</th>
-		<th colspan="9">Percentage Deduction</th>
-		<th>Performance</th>
-		<th>Attence Bonus</th>
-		<th>Housing Allowance</th>
-	</tr>
-	<tr>
-		<td>{{ latest_wage_info.month }}</td>
-		<td>{{ latest_wage_info.basic_wage }}</td>
-		<td>{{ latest_wage_info.per0w }}</td>
-		<td>{{ latest_wage_info.per6w }}</td>
-		<td>{{ latest_wage_info.per11w }}</td>
-		<td>{{ latest_wage_info.per16w }}</td>
-		<td>{{ latest_wage_info.per20w }}</td>
-		<td>{{ latest_wage_info.per24w }}</td>
-		<td>{{ latest_wage_info.per28w }}</td>
-		<td>{{ latest_wage_info.per31w }}</td>
-		<td>{{ latest_wage_info.per34w }}</td>
-		<td>{{ latest_wage_info.performance }}</td>
-		<td>{{ latest_wage_info.attence_bonus }}</td>
-		<td>{{ latest_wage_info.housing_allowances }}</td>
-	</tr>
-	</table>
-{% endif %}		
-</div>
-<div id="browse-horizontal" class="section"></div>
-<div id="content-secondary" class="section"></div>
-</div>
-
-<div id="content-related" class="sidebar">
-<h2>搜索</h2>
-<form id="sidebar_search" class="search" action="/search/">
-<div>
-	<p>
-		<input id="id_sidebar_search_q" type="search" name="q"></input>
-	<p>
-	<p>
-		<input class="submit" type="submit" value="Search"></input>
-	</p>
-</div>
-</form>
-
-<h2>计算系数</h2>
-	<ul>
-	<li>基本工资</li>
-	<li>客服绩效</li>
-	<li>全勤奖励</li>
-	<li>住房补贴</li>
-	<li>提成系数(1w-6w)</li>
-	<li>提成系数(6w-11w)</li>
-	<li>提成系数(11w-16w)</li>
-	<li>提成系数(16w-20w)</li>
-	<li>提成系数(20w-24w)</li>
-	<li>提成系数(24w-28w)</li>
-	<li>提成系数(28w-31w)</li>
-	<li>提成系数(31w-34w)</li>
+	<div id="header">
+	<h1 id="logo"></h1>
+	<ul id="nav-global">
+		<li id="nav-homepage"><a href="">首页</a></li>
+		<li id="nav-wage"><a href="">工资计算</a></li>
+		<li id="nav-aotoorder"><a href="">自动理单</a></li>
+		<li id="nav-calculator"><a href="">价格计算</a></li>
+		<li id="nav-board"><a href="">公告板</a></li>
 	</ul>
-</div>
+	</div>
+	<!-- END #header -->
 
+	<div id="billboard">
+	<h2><a href="">Wage Calculator</a></h2>
+	</div>
+	<!-- END #billboard -->
+
+	<div id="columnwrap">  
+		<div id="content-main">
+			<div id="calculator_panel" class="section">
+				<h1>工资计算</h1>
+				<div id="wage_input">
+					<p><input type="text" id="sales"></input></p>
+					<p><button type="button" onclick="calculateWage()">提交</button></p>
+					<p id="err_message">error para</p>
+					<p id="demo">demo para</p>
+					<p><button type="button" onclick="testFunction()">测试</button></p>
+					<p id="test">test para</p>
+					<p><button type="button" onclick="lookPercentage()">查看提成比例</button></p>
+					<p id="percentageDe">percentage deduct</p>
+				</div>
+
+				{% if latest_wage_info %}
+				<div id="calc_display">
+					<form name="calculate_display">
+					<fieldset>
+					<legend>计算明细</legend>
+					计算时间：{{ latest_wage_info.month }}<br>
+					基本工资：{{ latest_wage_info.basic_wage }}<br>
+					客服绩效：{{ latest_wage_info.performance }}<br>
+					全勤奖金：{{ latest_wage_info.attence_bonus }}<br>
+					住房补贴：{{ latest_wage_info.housing_allowances }}<br>
+					提成明细：
+					<table>
+					<tr> 
+					<th>提成区间</th>
+					<th>提成金额</th>
+					</tr>
+
+					<tr> 
+					<td>0万——6万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr class="alt"> 
+					<td>6万——11万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr> 
+					<td>11万——16万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr class="alt"> 
+					<td>16万——20万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr> 
+					<td>20万——24万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr class="alt"> 
+					<td>24万——28万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr> 
+					<td>28万——31万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr class="alt"> 
+					<td>31万——34万</td>
+					<td>0元</td>
+					</tr>
+
+					<tr> 
+					<td>34万以上·</td>
+					<td>0元</td>
+					</tr>
+					</table>
+					<div id="wage_format">
+					总额：
+					<p id="wage"></p> 
+					</div>
+					</fieldset>
+					</form>
+					{% endif %}	
+				</div>
+
+				{% if latest_wage_info %}
+					<table>
+					<tr>
+						<th>Date</th>
+						<th>Basic Wage</th>
+						<th colspan="9">Percentage Deduction</th>
+						<th>Performance</th>
+						<th>Attence Bonus</th>
+						<th>Housing Allowance</th>
+					</tr>
+					<tr>
+						<td>{{ latest_wage_info.month }}</td>
+						<td>{{ latest_wage_info.basic_wage }}</td>
+						<td>{{ latest_wage_info.per0w }}</td>
+						<td>{{ latest_wage_info.per6w }}</td>
+						<td>{{ latest_wage_info.per11w }}</td>
+						<td>{{ latest_wage_info.per16w }}</td>
+						<td>{{ latest_wage_info.per20w }}</td>
+						<td>{{ latest_wage_info.per24w }}</td>
+						<td>{{ latest_wage_info.per28w }}</td>
+						<td>{{ latest_wage_info.per31w }}</td>
+						<td>{{ latest_wage_info.per34w }}</td>
+						<td>{{ latest_wage_info.performance }}</td>
+						<td>{{ latest_wage_info.attence_bonus }}</td>
+						<td>{{ latest_wage_info.housing_allowances }}</td>
+					</tr>
+					</table>
+				{% endif %}		
+			</div>
+			
+		<div id="browse-horizontal" class="section"></div>
+		<div id="content-secondary" class="section"></div>
+		</div>
+
+		<div id="content-related" class="sidebar">
+		<h2>搜索</h2>
+		<form id="sidebar_search" class="search" action="/search/">
+		<div>
+			<p>
+				<input id="id_sidebar_search_q" type="search" name="q"></input>
+			<p>
+			<p>
+				<input class="submit" type="submit" value="Search"></input>
+			</p>
+		</div>
+		</form>
+	
+		<h2>计算系数</h2>
+		<ul>
+			<li>基本工资</li>
+			<li>客服绩效</li>
+			<li>全勤奖励</li>
+			<li>住房补贴</li>
+			<li>提成系数(1w-6w)</li>
+			<li>提成系数(6w-11w)</li>
+			<li>提成系数(11w-16w)</li>
+			<li>提成系数(16w-20w)</li>
+			<li>提成系数(20w-24w)</li>
+			<li>提成系数(24w-28w)</li>
+			<li>提成系数(28w-31w)</li>
+			<li>提成系数(31w-34w)</li>
+		</ul>
+	</div>
 </div>
 <!-- END #content -->
-
 
 <div id="footer">
 	<p>Copyright@2014 HollyMe</p>
 </div>
 <!-- END #footer -->
+
 </div>
 </body>	
 </html>
